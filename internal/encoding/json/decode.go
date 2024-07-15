@@ -88,6 +88,7 @@ func (d *Decoder) Read() (Token, error) {
 
 	case Null:
 		if !d.isValueNext() {
+			d.lastToken.kind&(Name|comma) != 0 ||
 			return Token{}, d.newSyntaxError(tok.pos, unexpectedFmt, tok.RawString())
 		}
 

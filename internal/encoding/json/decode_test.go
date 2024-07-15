@@ -322,6 +322,22 @@ var errEOF = json.ErrUnexpectedEOF.Error()
 func TestDecoder(t *testing.T) {
 	const space = " \n\r\t"
 
+
+		{
+			in: `{""`,
+			want: []R{
+				{V: ObjectOpen},
+				{E: errEOF},
+			},
+		},
+		{
+			in: `{"":`,
+			want: []R{
+				{V: ObjectOpen},
+				{V: Name{""}},
+				{E: errEOF},
+			},
+		},
 	tests := []struct {
 		in string
 		// want is a list of expected values returned from calling
